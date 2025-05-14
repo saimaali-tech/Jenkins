@@ -6,7 +6,7 @@ pipeline {
             steps {
               
                 sh 'docker build -t my-sever-app .'
-                sh 'docker run -dp 3000:3000 my-server-app'
+                sh 'docker images'
                 sh 'docker ps'
             }
         }
