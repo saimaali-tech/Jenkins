@@ -4,12 +4,23 @@ pipeline {
     stages {
         stage('Build docker image') {
             steps {
-              
-                sh 'docker build -t my-sever-app .'
+                sh 'docker build -t saimaali079/jenkins .'
                 sh 'docker images'
                 sh 'docker ps'
             }
         }
-        
+
+        stage('Docker Login') {
+            steps {
+                // Replace 'your-password-here' with your actual Docker Hub password or personal access token
+                sh 'echo "CwHEWQ3@mj6wqhL" | docker login -u saimaali079 --password-stdin'
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                sh 'docker push saimaali079/jenkins'
+            }
+        }
     }
 }
