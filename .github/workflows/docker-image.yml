@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub with access token
+      run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: Build the Docker image
+      run: docker build . -t ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+
+    - name: Push image to Docker Hub
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+
